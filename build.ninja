@@ -1,6 +1,7 @@
 # _build: doesn't work cause ./flex and ./bison
 outdir = .
 srcdir = .
+installdir = ./install
 cxxflags = -Wall -Wextra -std=gnu++11 -Isrc/ -fPIC -g -ggdb
 ldflags =
 
@@ -13,6 +14,18 @@ rule cpp
 rule lcpp
      command = $cpp $cxxflgs $ldflags $in -o$out
 
+rule install
+     command = install $in $out
+
+rule i
+     command = true
+
 build $outdir/createpasswd.o: cpp $srcdir/createpasswd.cc
 
 build $outdir/createpasswd: lcpp $outdir/createpasswd.o
+
+build $installdir/bin/createpasswd: install $outdir/createpasswd
+build $installdir/share/man/man8/createpasswd.8: install $outdir/createpasswd.8
+
+build install: i $installdir/bin/createpasswd $
+                 $installdir/share/man/man8/createpasswd.8
