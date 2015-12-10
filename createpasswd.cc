@@ -10,6 +10,10 @@ void usage(int exit_status) {
   exit(exit_status);
 }
 
+char random_char() {
+  return (char) (' ' + arc4random_uniform('~' - ' ' - 5));
+}
+
 int main(int argc, char *argv[]) {
   int ch;
   int min_passwd_len, max_passwd_len;
@@ -57,12 +61,11 @@ int main(int argc, char *argv[]) {
   for (int j = 0; j < nb_pass; ++j) {
     int passwd_len = min_passwd_len + arc4random_uniform(max_passwd_len - min_passwd_len);
     for (int i = 0; i < passwd_len; ++i)
-      std::cout << (char) (' ' + arc4random_uniform('~' - ' ' - 5));
-    if (random_len) {
-      while (arc4random_uniform(distribution_param)) {
-        std::cout << (char) (' ' + arc4random_uniform('~' - ' ' - 5));
-      }
-    }
+      std::cout << random_char();
+    if (random_len)
+      while (arc4random_uniform(distribution_param))
+        std::cout << random_char();
+
     if (display_end)
       std::cout << '$';
     std::cout << std::endl;
