@@ -1,0 +1,18 @@
+# _build: doesn't work cause ./flex and ./bison
+outdir = .
+srcdir = .
+cxxflags = -Wall -Wextra -std=gnu++11 -Isrc/ -fPIC -g -ggdb
+ldflags =
+
+cpp=eg++
+
+rule cpp
+     depfile = $out.d
+     command = $cpp $cxxflags -MMD -MF $out.d -c $in -o $out
+
+rule lcpp
+     command = $cpp $cxxflgs $ldflags $in -o$out
+
+build $outdir/createpasswd.o: cpp $srcdir/createpasswd.cc
+
+build $outdir/createpasswd: lcpp $outdir/createpasswd.o
