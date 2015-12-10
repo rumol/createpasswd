@@ -18,7 +18,7 @@ rule install
      command = install $in $out
 
 rule i
-     command = true
+     command = :
 
 build $outdir/createpasswd.o: cpp $srcdir/createpasswd.cc
 
