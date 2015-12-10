@@ -1,0 +1,10 @@
+*~
+.ninja_deps
+.ninja_log
+*.core
+*.o
+*.o.d
+
+\#*
+.\#*
+createpasswd
