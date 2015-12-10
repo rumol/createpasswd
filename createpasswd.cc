@@ -11,7 +11,7 @@ void usage(int exit_status) {
 }
 
 char random_char() {
-  return (char) (' ' + arc4random_uniform('~' - ' ' - 5));
+  return (char) (' ' + arc4random_uniform('~' - ' '));
 }
 
 int main(int argc, char *argv[]) {
