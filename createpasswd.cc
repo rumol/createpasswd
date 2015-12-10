@@ -6,14 +6,14 @@
 extern char *__progname;
 
 void usage(int exit_status) {
-  std::cerr << __progname << " [-ehrs] [-n number_password] [-l min_password_length] [-m max_password_length]" << std::endl;
+  std::cerr << __progname << " [-ehr] [-n number_of_password] [-l min_password_length] [-p distribution_parameter] [-m max_password_length]" << std::endl;
   exit(exit_status);
 }
 
 int main(int argc, char *argv[]) {
   int ch;
   int min_passwd_len, max_passwd_len;
-  int uniform_end = 4;
+  int distribution_param = 4;
   int nb_pass = 1;
 
   bool display_end, help, random_len;
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   display_end = help = random_len = false;
   min_passwd_len = max_passwd_len = 12;
 
-  while ((ch = getopt(argc, argv, "ehn:m:l:rs:")) != -1)
+  while ((ch = getopt(argc, argv, "ehn:m:l:p:r")) != -1)
     switch (ch) {
     case 'e':
       display_end = true;
@@ -38,11 +38,11 @@ int main(int argc, char *argv[]) {
     case 'l':
       min_passwd_len = atoi(optarg);
       break;
+    case 'p':
+      distribution_param = atoi(optarg);
+      break;
     case 'r':
       random_len = true;
-      break;
-    case 's':
-      uniform_end = atoi(optarg);
       break;
     default:
       usage(1);
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < passwd_len; ++i)
       std::cout << (char) (' ' + arc4random_uniform('~' - ' ' - 5));
     if (random_len) {
-      while (arc4random_uniform(uniform_end)) {
+      while (arc4random_uniform(distribution_param)) {
         std::cout << (char) (' ' + arc4random_uniform('~' - ' ' - 5));
       }
     }
@@ -68,4 +68,3 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
   }
 }
-
